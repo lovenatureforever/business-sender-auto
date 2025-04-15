@@ -213,7 +213,7 @@ CreateCSV() {
 }
 
 CopyContactsXlsx() {
-    startRow := PerPage * (Page - 1) + 2
+    startRow := 2
 
     if !FileExist(ContactFile) {
         MsgBox("Error: Unable to read the ctcs.xlsx file.")
@@ -232,6 +232,7 @@ CopyContactsXlsx() {
     firstRow := 2
     try {
         totalRows := xl.ActiveSheet.UsedRange.Rows.Count
+        if (totalRows == 1) ExitApp
         endRow := startRow + PerPage - 1
 
         ; Delete rows after selected range
@@ -241,6 +242,24 @@ CopyContactsXlsx() {
         ; Delete rows before selected range (in reverse order to avoid shifting)
         if (startRow > 2)
             xl.ActiveSheet.Rows(firstRow . ":" . (startRow - 1)).EntireRow.Delete
+
+    } catch {
+        MsgBox("An error occurred while deleting rows.")
+    }
+
+    ; Save and close the workbook (optional)
+    wb.Save()
+    wb.Close()
+    xl.Quit()
+
+    xl := ComObject("Excel.Application")
+    xl.Visible := false ; Set true if you want to see the file being modified
+
+    ; Open the workbook
+    wb := xl.Workbooks.Open(ContactFile)
+    try {
+        if (totalRows > endRow)
+            xl.ActiveSheet.Rows(startRow . ":" . Min(totalRows, endRow)).EntireRow.Delete
 
     } catch {
         MsgBox("An error occurred while deleting rows.")
