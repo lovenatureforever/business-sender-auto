@@ -5,22 +5,22 @@
 
 WinTitle := "ahk_exe Business Sender Pro V35 PRO.exe"
 ImportForm := "ahk_class WindowsForms10.Window.8.app.0.141b42a_r7_ad1"
-ContactFile := "D:\Works\whatsappauto\ctcs.xlsx"
-targetFile := "D:\Works\whatsappauto\target.xlsx"
-;ContactFile := "D:\Works\whatsappauto\import.csv"
-PhotoFile := "D:\Works\whatsappauto\photo.jpg"
-MessageFile := "D:\Works\whatsappauto\message.txt"
-PerPage := 10 ; number of contacts per page
+ContactFile := "C:\Users\User\Documents\Whatsappauto\ctcs.xlsx"
+targetFile := "C:\Users\User\Documents\Whatsappauto\target.xlsx"
+;ContactFile := "C:\Users\User\Documents\Whatsappauto\import.csv"
+PhotoFile := "C:\Users\User\Documents\Whatsappauto\photo.jpg"
+MessageFile := "C:\Users\User\Documents\Whatsappauto\message.txt"
+PerPage := 50 ; number of contacts per page
 
 Page := 1
 ;CreateCSV()
 CopyContactsXlsx()
 RunProfile()
 
-Page := 2
-;CreateCSV()
-CopyContactsXlsx()
-RunProfile("123")
+;;Page := 2
+;;CreateCSV()
+;CopyContactsXlsx()
+;RunProfile("123")
 
 RunProfile(profile := "") {
     tail := profile == "" ? "" : " " . profile
@@ -229,22 +229,22 @@ CopyContactsXlsx() {
     ; Open the workbook
     wb := xl.Workbooks.Open(targetFile)
 
-    firstRow := 2
     try {
         totalRows := xl.ActiveSheet.UsedRange.Rows.Count
-        if (totalRows == 1) ExitApp
+        if (totalRows == 1) {
+            ExitApp
+        }
         endRow := startRow + PerPage - 1
 
         ; Delete rows after selected range
         if (totalRows > endRow)
             xl.ActiveSheet.Rows((endRow + 1) . ":" . totalRows).EntireRow.Delete
-
-        ; Delete rows before selected range (in reverse order to avoid shifting)
-        if (startRow > 2)
-            xl.ActiveSheet.Rows(firstRow . ":" . (startRow - 1)).EntireRow.Delete
-
     } catch {
         MsgBox("An error occurred while deleting rows.")
+        wb.Save()
+        wb.Close()
+        xl.Quit()
+        ExitApp
     }
 
     ; Save and close the workbook (optional)
@@ -260,9 +260,9 @@ CopyContactsXlsx() {
     try {
         if (totalRows > endRow)
             xl.ActiveSheet.Rows(startRow . ":" . Min(totalRows, endRow)).EntireRow.Delete
-
     } catch {
         MsgBox("An error occurred while deleting rows.")
+        ExitApp
     }
 
     ; Save and close the workbook (optional)
