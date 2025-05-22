@@ -4,13 +4,13 @@
 
 
 WinTitle := "ahk_exe Business Sender Pro V35 PRO.exe"
-ImportForm := "ahk_class WindowsForms10.Window.8.app.0.141b42a_r7_ad1"
-ContactFile := "C:\Users\User\Documents\Whatsappauto\ctcs.xlsx"
-targetFile := "C:\Users\User\Documents\Whatsappauto\target.xlsx"
-;ContactFile := "C:\Users\User\Documents\Whatsappauto\import.csv"
-PhotoFile := "C:\Users\User\Documents\Whatsappauto\photo.jpg"
-MessageFile := "C:\Users\User\Documents\Whatsappauto\message.txt"
-PerPage := 50 ; number of contacts per page
+ImportForm := "ahk_class WindowsForms10.Window.8.app.0.141b42a_r8_ad1"
+ContactFile := "C:\Users\user\Documents\Whatsappauto\ctcs.xlsx"
+targetFile := "C:\Users\user\Documents\Whatsappauto\target.xlsx"
+;ContactFile := "C:\Users\user\Documents\Whatsappauto\import.csv"
+PhotoFile := "C:\Users\user\Documents\Whatsappauto\photo.jpg"
+MessageFile := "C:\Users\user\Documents\Whatsappauto\message.txt"
+PerPage := 100 ; number of contacts per page
 
 Page := 1
 ;CreateCSV()
@@ -29,7 +29,7 @@ RunProfile(profile := "") {
     ; Wait a moment
     ;Sleep(10000)
     WinWait(winTitle)
-    while !ControlExists("WindowsForms10.SysListView32.app.0.141b42a_r7_ad13", WinTitle) {
+    while !ControlExists("WindowsForms10.SysListView32.app.0.141b42a_r8_ad13", WinTitle) {
         Sleep(500)
     }
 
@@ -42,7 +42,7 @@ RunProfile(profile := "") {
 
         ; right click in number list, and then choose "imports from files"
         SetControlDelay -1
-        ControlClick "WindowsForms10.SysListView32.app.0.141b42a_r7_ad13", , , "Right"
+        ControlClick "WindowsForms10.SysListView32.app.0.141b42a_r8_ad13", , , "Right"
         Sleep(500)
         Send("{Down}")
         Sleep(500)
@@ -50,7 +50,7 @@ RunProfile(profile := "") {
         Sleep(2000)
 
         ; click "Browse" button
-        ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r7_ad14", WinTitle
+        ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r8_ad14", WinTitle
         Sleep(1000)
 
         ; file path in File Open
@@ -61,13 +61,13 @@ RunProfile(profile := "") {
         TreatHeader()
 
         ; click import button
-        ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r7_ad17", ImportForm
+        ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r8_ad17", ImportForm
         Sleep(5000)
 
         ; Attach Files -> menu, photo
         if FileExist(PhotoFile) {
             WinActivate(WinTitle)
-            ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r7_ad122", WinTitle
+            ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r8_ad122", WinTitle
             Send("{Down}")
             Send("{Enter}")
             Sleep(500)
@@ -86,7 +86,7 @@ RunProfile(profile := "") {
         }
 
         ; paste the content into message box
-        EditPaste(MyText, "WindowsForms10.EDIT.app.0.141b42a_r7_ad12", WinTitle)
+        EditPaste(MyText, "WindowsForms10.EDIT.app.0.141b42a_r8_ad12", WinTitle)
 
         ; wait ready
         Sleep(500)
@@ -94,7 +94,7 @@ RunProfile(profile := "") {
             WinActivate(WinTitle)
             Sleep(500)
             ; Retrieve the button's caption
-            Text := ControlGetText("WindowsForms10.STATIC.app.0.141b42a_r7_ad11", WinTitle)
+            Text := ControlGetText("WindowsForms10.STATIC.app.0.141b42a_r8_ad11", WinTitle)
 
             if (Text == "Ready") {
                 break
@@ -103,7 +103,7 @@ RunProfile(profile := "") {
         }
 
         ; click "send now" button
-        ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r7_ad123", WinTitle
+        ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r8_ad123", WinTitle
         Sleep(1500)
 
         ; check if can send
@@ -115,7 +115,7 @@ RunProfile(profile := "") {
         }
 
         ; click blinde mode
-        ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r7_ad15", WinTitle
+        ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r8_ad15", WinTitle
         Sleep(500)
 
         ;;
@@ -127,7 +127,7 @@ RunProfile(profile := "") {
         ;;
 
         ; click ok button
-        ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r7_ad14", WinTitle
+        ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r8_ad14", WinTitle
 
         ; wait to send all, close
         Loop {
@@ -161,20 +161,20 @@ ControlExists(ControlName, WinTitle) {
 
 TreatHeader() {
     ; check "Use first row as header"
-    ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r7_ad13", ImportForm
+    ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r8_ad13", ImportForm
     Sleep(300)
     ; check "Reove duplicates"
-    ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r7_ad12", ImportForm
+    ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r8_ad12", ImportForm
     Sleep(300)
 
     ; set name field
-    ControlClick "WindowsForms10.COMBOBOX.app.0.141b42a_r7_ad12", ImportForm
+    ControlClick "WindowsForms10.COMBOBOX.app.0.141b42a_r8_ad12", ImportForm
     Sleep(300)
     Send("{Down}")
     Sleep(300)
     Send("{Enter}")
     ; set number field
-    ControlClick "WindowsForms10.COMBOBOX.app.0.141b42a_r7_ad13", ImportForm
+    ControlClick "WindowsForms10.COMBOBOX.app.0.141b42a_r8_ad13", ImportForm
     Sleep(300)
     Send("{Down}")
     Sleep(300)
@@ -232,6 +232,8 @@ CopyContactsXlsx() {
     try {
         totalRows := xl.ActiveSheet.UsedRange.Rows.Count
         if (totalRows == 1) {
+            wb.Close()
+            xl.Quit()
             ExitApp
         }
         endRow := startRow + PerPage - 1
@@ -258,8 +260,7 @@ CopyContactsXlsx() {
     ; Open the workbook
     wb := xl.Workbooks.Open(ContactFile)
     try {
-        if (totalRows > endRow)
-            xl.ActiveSheet.Rows(startRow . ":" . Min(totalRows, endRow)).EntireRow.Delete
+        xl.ActiveSheet.Rows(startRow . ":" . Min(totalRows, endRow)).EntireRow.Delete
     } catch {
         MsgBox("An error occurred while deleting rows.")
         ExitApp
