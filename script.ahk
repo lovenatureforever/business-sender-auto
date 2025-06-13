@@ -137,6 +137,7 @@ RunProfile(profile := "") {
                 Text := ControlGetText("Static2", "ahk_class #32770")
 
                 if (Text == "Campaign has been done!") {
+                    DeleteContactsXlsx()
                     break
                 }
             }
@@ -219,7 +220,7 @@ CopyContactsXlsx() {
         MsgBox("Error: Unable to read the ctcs.xlsx file.")
         ExitApp
     }
-
+    global targetFile := "C:\Users\user\Documents\Whatsappauto\target_" . A_Now . ".xlsx"
     FileCopy(ContactFile, targetFile, true)
 
 
@@ -253,6 +254,16 @@ CopyContactsXlsx() {
     wb.Save()
     wb.Close()
     xl.Quit()
+}
+
+DeleteContactsXlsx() {
+    startRow := 2
+    endRow := startRow + PerPage - 1
+
+    if !FileExist(ContactFile) {
+        MsgBox("Error: Unable to read the ctcs.xlsx file.")
+        ExitApp
+    }
 
     xl := ComObject("Excel.Application")
     xl.Visible := false ; Set true if you want to see the file being modified
@@ -260,6 +271,7 @@ CopyContactsXlsx() {
     ; Open the workbook
     wb := xl.Workbooks.Open(ContactFile)
     try {
+        totalRows := xl.ActiveSheet.UsedRange.Rows.Count
         xl.ActiveSheet.Rows(startRow . ":" . Min(totalRows, endRow)).EntireRow.Delete
     } catch {
         MsgBox("An error occurred while deleting rows.")
