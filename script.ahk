@@ -10,39 +10,46 @@ targetFile := "C:\Users\user\Documents\Whatsappauto\target.xlsx"
 ;ContactFile := "C:\Users\user\Documents\Whatsappauto\import.csv"
 PhotoFile := "C:\Users\user\Documents\Whatsappauto\photo.jpg"
 MessageFile := "C:\Users\user\Documents\Whatsappauto\message.txt"
-PerPage := 2 ; number of contacts per page
+PerPage := 40 ; number of contacts per page
 
 RunWait('icacls "' ContactFile '" /grant user:M', , 'Hide')
 FileSetAttrib("-R", ContactFile)
 
 Page := 1
 ;CreateCSV()
-CopyContactsXlsx()
-RunProfile()
+;CopyContactsXlsx()
+;+60 11-1231 0079
+;RunProfile()
 
 CopyContactsXlsx()
-RunProfile('01121659058')
+RunProfile('01163629915')
 
 CopyContactsXlsx()
 RunProfile('01121679033')
 
 CopyContactsXlsx()
-RunProfile('01121682805')
+RunProfile('01159225779')
 
 CopyContactsXlsx()
-RunProfile('01121695920')
+RunProfile('01159227087')
 
 CopyContactsXlsx()
-RunProfile('01121695970')
+RunProfile('01159227713')
 
 CopyContactsXlsx()
-RunProfile('01121697582')
+RunProfile('01159226608')
 
 CopyContactsXlsx()
-RunProfile('01163619946')
+RunProfile('01159226361')
 
 CopyContactsXlsx()
-RunProfile('01163629915')
+RunProfile('01159272739')
+
+CopyContactsXlsx()
+RunProfile('01159225344')
+
+CopyContactsXlsx()
+RunProfile('01159223987')
 
 RunProfile(profile := "") {
     tail := profile == "" ? "" : " " . profile
