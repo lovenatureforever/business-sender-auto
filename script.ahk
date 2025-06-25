@@ -10,7 +10,7 @@ targetFile := "C:\Users\user\Documents\Whatsappauto\target.xlsx"
 ;ContactFile := "C:\Users\user\Documents\Whatsappauto\import.csv"
 PhotoFile := "C:\Users\user\Documents\Whatsappauto\photo.jpg"
 MessageFile := "C:\Users\user\Documents\Whatsappauto\message.txt"
-PerPage := 40 ; number of contacts per page
+PerPage := 10 ; number of contacts per page
 
 RunWait('icacls "' ContactFile '" /grant user:M', , 'Hide')
 FileSetAttrib("-R", ContactFile)
@@ -117,7 +117,9 @@ RunProfile(profile := "") {
         ; paste the content into message box
         EditPaste(MyText, "WindowsForms10.EDIT.app.0.141b42a_r8_ad12", WinTitle)
 
-        ; wait ready
+        ; wait ready        
+        MaxWaitTime := 600
+        WaitedTime := 0
         Sleep(500)
         Loop {
             WinActivate(WinTitle)
@@ -129,6 +131,11 @@ RunProfile(profile := "") {
                 break
             }
             Sleep(500)
+            WaitedTime += 1
+            if (WaitedTime >= MaxWaitTime) {
+                ProcessClose("Business Sender Pro V35 PRO.exe")
+                return
+            }
         }
 
         ; click "send now" button
@@ -146,14 +153,6 @@ RunProfile(profile := "") {
         ; click blinde mode
         ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r8_ad15", WinTitle
         Sleep(500)
-
-        ;;
-        ;;
-        ;ProcessClose("Business Sender Pro V35 PRO.exe")
-        ;return
-        ;ExitApp
-        ;;
-        ;;
 
         ; click ok button
         ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r8_ad14", WinTitle
