@@ -21,47 +21,49 @@ Page := 1
 ;+60 11-1231 0079
 ;RunProfile()
 
-CopyContactsXlsx()
-RunProfile('01163629915')
 
-CopyContactsXlsx()
-RunProfile('01121679033')
+CopyContactsXlsx('601159362833')
+RunProfile('601159362833')
 
-CopyContactsXlsx()
-RunProfile('01159225779')
+CopyContactsXlsx('601159363618')
+RunProfile('601159363618')
 
-CopyContactsXlsx()
-RunProfile('01159227087')
+CopyContactsXlsx('601159361617')
+RunProfile('601159361617')
 
-CopyContactsXlsx()
-RunProfile('01159227713')
+CopyContactsXlsx('601159335834')
+RunProfile('601159335834')
 
-CopyContactsXlsx()
-RunProfile('01159226608')
+CopyContactsXlsx('601159353732')
+RunProfile('601159353732')
 
-CopyContactsXlsx()
-RunProfile('01159226361')
+CopyContactsXlsx('601159339348')
+RunProfile('601159339348')
 
-CopyContactsXlsx()
-RunProfile('01159272739')
+CopyContactsXlsx('601159345446')
+RunProfile('601159345446')
 
-CopyContactsXlsx()
-RunProfile('01159225344')
+CopyContactsXlsx('601159347077')
+RunProfile('601159347077')
 
-CopyContactsXlsx()
-RunProfile('01159223987')
+CopyContactsXlsx('601159337961')
+RunProfile('601159337961')
+
+CopyContactsXlsx('601159353311')
+RunProfile('601159353311')
+
 
 RunProfile(profile := "") {
     tail := profile == "" ? "" : " " . profile
-    Run '"C:\Program Files (x86)\Marketerpro Enterprise\Business Sender Pro V35 Pro\Business Sender Pro V35 PRO.exe"' . tail
-
-    ; Wait a moment
-    ;Sleep(10000)
-    WinWait(winTitle)
-    while !ControlExists("WindowsForms10.SysListView32.app.0.141b42a_r8_ad13", WinTitle) {
-        Sleep(500)
+    if !WinExist(WinTitle) {
+        Run '"C:\Program Files (x86)\Marketerpro Enterprise\Business Sender Pro V35 Pro\Business Sender Pro V35 PRO.exe"' . tail
+        ; Wait a moment
+        ;Sleep(10000)
+        WinWait(winTitle)
+        while !ControlExists("WindowsForms10.SysListView32.app.0.141b42a_r8_ad13", WinTitle) {
+            Sleep(500)
+        }
     }
-
 
     if WinExist(WinTitle)
     {
@@ -76,7 +78,7 @@ RunProfile(profile := "") {
         Send("{Down}")
         Sleep(500)
         Send("{Enter}")
-        Sleep(2000)
+        Sleep(12000)
 
         ; click "Browse" button
         ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r8_ad14", WinTitle
@@ -85,13 +87,13 @@ RunProfile(profile := "") {
         ; file path in File Open
         Send(targetFile)
         Send("{Enter}")
-        Sleep(5000)
+        Sleep(15000)
 
         TreatHeader()
 
         ; click import button
         ControlClick "WindowsForms10.BUTTON.app.0.141b42a_r8_ad17", ImportForm
-        Sleep(5000)
+        Sleep(15000)
 
         ; Attach Files -> menu, photo
         if FileExist(PhotoFile) {
@@ -241,14 +243,14 @@ CreateCSV() {
     }
 }
 
-CopyContactsXlsx() {
+CopyContactsXlsx(profile := "default") {
     startRow := 2
 
     if !FileExist(ContactFile) {
         MsgBox("Error: Unable to read the ctcs.xlsx file.")
         ExitApp
     }
-    global targetFile := "C:\Users\user\Documents\Whatsappauto\target_" . A_Now . ".xlsx"
+    global targetFile := "C:\Users\user\Documents\Whatsappauto\" . profile . "_" . A_Now . ".xlsx"
     FileCopy(ContactFile, targetFile, true)
 
 
